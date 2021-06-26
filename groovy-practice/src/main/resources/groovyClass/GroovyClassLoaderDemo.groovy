@@ -11,6 +11,12 @@ class GroovyClassLoaderDemo {
     }
 
     Map<String, String> checkData(Map map) {
+        String  name = map.get("name");
+        if (name != "王兴瑞") {
+            Map maps = new HashMap<String, String>();
+            maps.put("name", "姓名校验不通过")
+            return maps
+        }
         for (v in map) {
             println v
         }

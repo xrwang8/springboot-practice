@@ -42,7 +42,7 @@ public class GroovyAop {
     }
 
     @Around("GroovyPoint()")
-    public Object GrovvyTest(ProceedingJoinPoint proceedingJoinPoint) {
+    public Map GrovvyTest(ProceedingJoinPoint proceedingJoinPoint) {
         Object[] args = proceedingJoinPoint.getArgs();
         Map<String, Object> dataMaps = BeanUtil.beanToMap(args[0]);
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
@@ -62,7 +62,7 @@ public class GroovyAop {
             e.printStackTrace();
         }
 
-        return args;
+        return null;
     }
 
 }
