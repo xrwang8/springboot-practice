@@ -1,19 +1,13 @@
 package com.example.aop;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
-import groovy.lang.GroovyShell;
 import lombok.extern.slf4j.Slf4j;
-import nonapi.io.github.classgraph.json.JSONUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -41,8 +35,12 @@ public class GroovyAop {
     public void GroovyPoint() {
     }
 
+    @Pointcut("execution(* com.example.controller..*(..))")
+    public void requestServer() {
+    }
+
     @Around("GroovyPoint()")
-    public Map GrovvyTest(ProceedingJoinPoint proceedingJoinPoint) {
+    public Object GrovvyTest(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object[] args = proceedingJoinPoint.getArgs();
         Map<String, Object> dataMaps = BeanUtil.beanToMap(args[0]);
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
@@ -56,13 +54,15 @@ public class GroovyAop {
         GroovyObject object;
         try {
             object = (GroovyObject) aClass.newInstance();
-            Object res = object.invokeMethod("checkData", dataMaps);
-            log.info("GroovyClassLoader的运行结果：{}", res.toString());
+            object.invokeMethod("checkData", dataMaps);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
+        Object result = proceedingJoinPoint.proceed();
+        return result;
 
-        return null;
+
     }
+
 
 }

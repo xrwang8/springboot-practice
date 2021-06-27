@@ -16,6 +16,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Documented
 public @interface GroovyTest {
-
-    String desc() default "";
+    String orgCode() default "";
 }
