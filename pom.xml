@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>springbooot-practice</artifactId>
+    <artifactId>springboot-practice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springbooot-practice</name>
+    <name>springboot-practice</name>
     <packaging>pom</packaging>
     <modules>
         <module>groovy-practice</module>
